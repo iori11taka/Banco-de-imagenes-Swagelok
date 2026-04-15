@@ -9,7 +9,6 @@
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
-  background-image: url("https://lh3.googleusercontent.com/d/1R2Ejc1CWO68IsMEvrgQmbMvuDoDxta03");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,7 +29,6 @@ body::before {
   z-index: -1;
 }
 
-/* Mejora para celular */
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
@@ -159,20 +157,9 @@ input {
   font-size: 14px;
 }
 
-.whatsapp {
-  background: #25D366;
-  color: white;
-}
-
-.copiar {
-  background: #007BFF;
-  color: white;
-}
-
-.descargar {
-  background: #6c757d;
-  color: white;
-}
+.whatsapp { background: #25D366; color: white; }
+.copiar { background: #007BFF; color: white; }
+.descargar { background: #6c757d; color: white; }
 
 .cerrar {
   position: absolute;
@@ -199,12 +186,12 @@ input {
 <div class="modal" id="modal">
   <span class="cerrar" onclick="cerrarModal()">✖</span>
 
-  <img id="imagenGrande" alt="Imagen grande">
+  <img id="imagenGrande">
 
   <div class="navegacion">
-    <button onclick="anteriorImagen()">⬅ Anterior</button>
+    <button onclick="anteriorImagen()">⬅</button>
     <span id="contadorImagen">1 / 1</span>
-    <button onclick="siguienteImagen()">Siguiente ➡</button>
+    <button onclick="siguienteImagen()">➡</button>
   </div>
 
   <div class="botones">
@@ -215,149 +202,70 @@ input {
 </div>
 
 <script>
+// 🔥 FONDOS ALEATORIOS
+const fondos = [
+  "imagenes/fondo1.jpg",
+  "imagenes/fondo2.jpg",
+  "imagenes/fondo3.jpg",
+  "imagenes/fondo4.jpg",
+  "imagenes/fondo5.jpg"
+];
+
+function cambiarFondoAleatorio() {
+  const i = Math.floor(Math.random() * fondos.length);
+  document.body.style.backgroundImage = `url('${fondos[i]}')`;
+}
+
+// VARIABLES
 let imagenActual = "";
 let productoActual = null;
 let indiceImagenActual = 0;
 
+// DATOS
 const datos = [
-  /*
-  Activa este bloque cuando subas una imagen local para "Regulador simple"
-  {
-    nombre: "Regulador Simple",
-    tags: "regulador simple 1 manometro",
-    imagenes: [
-      "imagenes/regulador-simple.jpg"
-    ]
-  },
-  */
- {
-    nombre: "Regulador KPR Simple",
-    tags: "Regulador simple 1 manometros",
-    imagenes: [
-      "imagenes/regulador-simple.jpg"
-    ]
-  },
-   {
-    nombre: "Regulador KPR de 1 Manómetros Simple",
-    tags: "regulador kpr 1 manometro",
-    imagenes: [
-      "imagenes/regulador-1-manometro.jpg",
-      "imagenes/regulador-1-manometro-2.jpg",
-      "imagenes/regulador-1-manometro-3.jpg",
-      "imagenes/regulador-1-manometro-4.jpg"
-    ]
-  },
-  {
-    nombre: "Regulador KPR de 2 Manómetros",
-    tags: "regulador doble 2 manometros",
-    imagenes: [
-      "imagenes/regulador-2-manometros.jpg"
-    ]
-  },
-  {
-    nombre: "Regulador KPR de 2 Manómetros OMEGA",
-    tags: "regulador panel montaje",
-    imagenes: [
-      "imagenes/regulador-panel.jpg"
-    ]
-  },
-   {
-    nombre: "Regulador KPR de 2 Manómetros con Manguera y CGA580",
-    tags: "regulador kpr 2 manometros manguera y cga580",
-    imagenes: [
-      "imagenes/reguladorkpr-manguera-cga580.jpg",
-      "imagenes/reguladorkpr-manguera-cga580-2.jpg",
-      "imagenes//reguladorkpr-manguera-cga580-3.jpg",
-      "imagenes//reguladorkpr-manguera-cga580-4.jpg"
-    ]
-  },
-  {
-    nombre: "Regulador KPF de 2 Manómetros con Adaptadores ODxNPT",
-    tags: "regulador kpf 2 manometros y adapta",
-    imagenes: [
-      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-4.jpg",
-      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt.jpg",
-      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-2.jpg",
-      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-3.jpg"
-    ]
-  },
-  {
-    nombre: "Maleta de Herramientas",
-    tags: "maleta de herramientas",
-    imagenes: [
-      "imagenes/maleta-de-herramientas-2.jpg",
-      "imagenes/maleta-de-herramientas-3.jpg",
-      "imagenes/maleta-de-herramientas-4.jpg"
-    ]
-  },
-  {
-    nombre: "Cilindro Toma Muestra 304 300cc Accesorios Completos",
-    tags: "cilindro 300cc 304 completo",
-    imagenes: [
-      "imagenes/cilindrotm-300cc-completo.jpg",
-      "imagenes/cilindrotm-300cc-completo-2.jpg"
-    ]
-  },
-  {
-    nombre: "Cilindro Toma Muestra 316 500cc Accesorios Completos",
-    tags: "cilindro 500cc 316 completo",
-    imagenes: [
-      "imagenes/cilindrotm316-500cc-completo.jpg",
-      "imagenes/cilindrotm316-500cc-completo-2.jpg"
-    ]
-  },
-  {
-    nombre: "Válvula V2NBM8 con Manómetro",
-    tags: "valvula v2nbm8 con manometro",
-    imagenes: [
-      "imagenes/valvula-v2nbm8-manometro.jpg",
-      "imagenes/valvula-v2nbm8-manometro-2.jpg",
-      "imagenes/valvula-v2nbm8-manometro-3.jpg",
-      "imagenes/valvula-v2nbm8-manometro-4.jpg"
-    ]
-  },
-  {
-    nombre: "Eliminador de Humedad KPR",
-    tags: "eliminador de humedad con kpr",
-    imagenes: [
-      "imagenes/eliminador-humedad-kpr.png",
-      "imagenes/eliminador-humedad-kpr-2.png"
-    ]
-  }
+{
+  nombre: "Regulador KPR Simple",
+  tags: "regulador simple",
+  imagenes: ["imagenes/regulador-simple.jpg"]
+},
+{
+  nombre: "Regulador KPR 1 Manómetro",
+  tags: "regulador 1 manometro",
+  imagenes: [
+    "imagenes/regulador-1-manometro.jpg",
+    "imagenes/regulador-1-manometro-2.jpg"
+  ]
+},
+{
+  nombre: "Regulador KPR 2 Manómetros",
+  tags: "regulador doble",
+  imagenes: ["imagenes/regulador-2-manometros.jpg"]
+}
 ];
 
+// FUNCIONES
 function mostrarResultados(filtro = "") {
   const contenedor = document.getElementById("resultados");
   contenedor.innerHTML = "";
 
   const resultados = datos.filter(item =>
-    (item.nombre + " " + item.tags).toLowerCase().includes(filtro.toLowerCase())
+    (item.nombre + item.tags).toLowerCase().includes(filtro.toLowerCase())
   );
 
-  if (resultados.length === 0) {
-    contenedor.innerHTML = `<p style="color:white;">No se encontraron resultados.</p>`;
-    return;
-  }
-
-  resultados.forEach((item, index) => {
+  resultados.forEach((item, i) => {
     contenedor.innerHTML += `
-      <div class="card" onclick="abrirModal(${index})">
-        <img src="${item.imagenes[0]}" alt="${item.nombre}">
+      <div class="card" onclick="abrirModal(${i})">
+        <img src="${item.imagenes[0]}">
         <p>${item.nombre}</p>
       </div>
     `;
   });
 }
 
-function abrirModal(indexProducto) {
-  productoActual = datos.filter(item =>
-    (item.nombre + " " + item.tags).toLowerCase().includes(
-      document.getElementById("busqueda").value.toLowerCase()
-    )
-  )[indexProducto];
-
+function abrirModal(i) {
+  productoActual = datos[i];
   indiceImagenActual = 0;
-  imagenActual = productoActual.imagenes[indiceImagenActual];
+  imagenActual = productoActual.imagenes[0];
 
   document.getElementById("modal").style.display = "flex";
   document.getElementById("imagenGrande").src = imagenActual;
@@ -369,8 +277,6 @@ function cerrarModal() {
 }
 
 function siguienteImagen() {
-  if (!productoActual) return;
-
   indiceImagenActual = (indiceImagenActual + 1) % productoActual.imagenes.length;
   imagenActual = productoActual.imagenes[indiceImagenActual];
   document.getElementById("imagenGrande").src = imagenActual;
@@ -378,8 +284,6 @@ function siguienteImagen() {
 }
 
 function anteriorImagen() {
-  if (!productoActual) return;
-
   indiceImagenActual = (indiceImagenActual - 1 + productoActual.imagenes.length) % productoActual.imagenes.length;
   imagenActual = productoActual.imagenes[indiceImagenActual];
   document.getElementById("imagenGrande").src = imagenActual;
@@ -387,26 +291,8 @@ function anteriorImagen() {
 }
 
 function actualizarContador() {
-  if (!productoActual) return;
-
   document.getElementById("contadorImagen").textContent =
     `${indiceImagenActual + 1} / ${productoActual.imagenes.length}`;
-}
-
-async function compartirWhatsapp() {
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: productoActual?.nombre || "Producto",
-        text: `Imagen de ${productoActual?.nombre || "producto"}`,
-        url: imagenActual
-      });
-    } else {
-      alert("Tu navegador no permite compartir directamente.");
-    }
-  } catch (error) {
-    alert("No se pudo compartir");
-  }
 }
 
 function copiarImagen() {
@@ -415,20 +301,27 @@ function copiarImagen() {
 }
 
 function descargarImagen() {
-  const link = document.createElement("a");
-  link.href = imagenActual;
-  link.download = imagenActual.split("/").pop();
-  link.click();
+  const a = document.createElement("a");
+  a.href = imagenActual;
+  a.download = "";
+  a.click();
+}
+
+function compartirWhatsapp() {
+  window.open(`https://wa.me/?text=${imagenActual}`);
 }
 
 function toggleModo() {
   document.body.classList.toggle("dark");
 }
 
-document.getElementById("busqueda").addEventListener("input", (e) => {
+// EVENTOS
+document.getElementById("busqueda").addEventListener("input", e => {
   mostrarResultados(e.target.value);
 });
 
+// INICIO
+cambiarFondoAleatorio();
 mostrarResultados();
 </script>
 
