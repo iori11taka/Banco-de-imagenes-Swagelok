@@ -29,6 +29,10 @@ body::before {
   z-index: -1;
 }
 
+.dark::before {
+  background: rgba(0,0,0,0.6);
+}
+
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
@@ -36,7 +40,6 @@ body::before {
 }
 
 .dark {
-  background: linear-gradient(135deg, #1f2937, #111827);
   color: white;
 }
 
