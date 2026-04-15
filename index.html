@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reguladores</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-image: url("https://lh3.googleusercontent.com/d/1R2Ejc1CWO68IsMEvrgQmbMvuDoDxta03");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  transition: 0.3s;
+}
+
+/* Overlay elegante */
+body::before {
+  content:"";
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.35);
+  z-index: -1;
+}
+
+/* Mejora para celular */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+.dark {
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: white;
+}
+
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.logo {
+  font-weight:bold;
+  font-size:20px;
+  color:white;
+}
+
+.toggle {
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: rgba(255,255,255,0.95);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.dark .card {
+  background:#1f2937;
+  color:white;
+}
+
+.card:hover {
+  transform:scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.card p {
+  text-align:center;
+  font-size:14px;
+}
+
+/* Modal */
+.modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.modal img {
+  max-width:90%;
+  max-height:70%;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.navegacion {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:15px;
+  color:white;
+  flex-wrap:wrap;
+}
+
+.navegacion button {
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.botones {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.botones button {
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.whatsapp {
+  background:#25D366;
+  color:white;
+}
+
+.copiar {
+  background:#007BFF;
+  color:white;
+}
+
+.descargar {
+  background:#6c757d;
+  color:white;
+}
+
+.cerrar {
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">🔧 Banco de imagenes Swagelok</div>
+  <button class="toggle" onclick="toggleModo()">🌙</button>
+</div>
+
+<input type="text" id="busqueda" placeholder="Buscar regulador...">
+
+<div class="grid" id="resultados"></div>
+
+<div class="modal" id="modal">
+  <span class="cerrar" onclick="cerrarModal()">✖</span>
+
+  <img id="imagenGrande" alt="Imagen grande">
+
+  <div class="navegacion">
+    <button onclick="anteriorImagen()">⬅ Anterior</button>
+    <span id="contadorImagen">1 / 1</span>
+    <button onclick="siguienteImagen()">Siguiente ➡</button>
+  </div>
+
+  <div class="botones">
+    <button class="whatsapp" onclick="compartirWhatsapp()">WhatsApp</button>
+    <button class="copiar" onclick="copiarImagen()">Copiar</button>
+    <button class="descargar" onclick="descargarImagen()">Descargar</button>
+  </div>
+</div>
+
+<script>
+let imagenActual = "";
+let productoActual = null;
+let indiceImagenActual = 0;
+
+const datos = [
+  {
+    nombre: "Regulador simple",
+    tags: "regulador simple 1 manometro",
+    imagenes: [
+      "https://lh3.googleusercontent.com/d/1EhybN0jwv0gaPVNQdhWS6f_8YTH8GcDR"
+    ]
+  },
+  {
+    nombre: "Regulador 2 manómetros",
+    tags: "regulador doble 2 manometros",
+    imagenes: [
+      "https://lh3.googleusercontent.com/d/1-Be2zjhQdLo9V-ITdKlgh6PoiGRTWzI8"
+    ]
+  },
+  {
+    nombre: "Regulador panel",
+    tags: "regulador panel montaje",
+    imagenes: [
+      "https://lh3.googleusercontent.com/d/1HHSmzs9qfGdB5K4Cwskxkl5KW2yimHAs"
+    ]
+  },
+{
+    nombre: "Maleta de herramientas",
+    tags: "Maleta de herramientas",
+    imagenes: [
+      "https://lh3.googleusercontent.com/d/1ToXOcEnwynMD-QNPSvqoS3Lnr1nHVk_L"
+    ]
+  },
+
+{
+    nombre: "Eliminador humedad KPR",
+    tags: "eliminador de humedad con kpr",
+    imagenes: [
+      "https://lh3.googleusercontent.com/d/1BnTr-jXLo3qHyTOhxmWUUfjkRoq0h5EH",
+      "https://lh3.googleusercontent.com/d/1QnFmXGlmAQhG4deYkJJcLFW2QdY6Z7fl"
+    ]
+  }
+];
+
+function mostrarResultados(filtro = "") {
+  const contenedor = document.getElementById("resultados");
+  contenedor.innerHTML = "";
+
+  datos
+    .filter(item =>
+      (item.nombre + " " + item.tags).toLowerCase().includes(filtro.toLowerCase())
+    )
+    .forEach((item, index) => {
+      contenedor.innerHTML += `
+        <div class="card" onclick="abrirModal(${index})">
+          <img src="${item.imagenes[0]}" alt="${item.nombre}">
+          <p>${item.nombre}</p>
+        </div>
+      `;
+    });
+}
+
+function abrirModal(indexProducto) {
+  productoActual = datos[indexProducto];
+  indiceImagenActual = 0;
+  imagenActual = productoActual.imagenes[indiceImagenActual];
+
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("imagenGrande").src = imagenActual;
+  actualizarContador();
+}
+
+function cerrarModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function siguienteImagen() {
+  if (!productoActual) return;
+
+  indiceImagenActual = (indiceImagenActual + 1) % productoActual.imagenes.length;
+  imagenActual = productoActual.imagenes[indiceImagenActual];
+  document.getElementById("imagenGrande").src = imagenActual;
+  actualizarContador();
+}
+
+function anteriorImagen() {
+  if (!productoActual) return;
+
+  indiceImagenActual = (indiceImagenActual - 1 + productoActual.imagenes.length) % productoActual.imagenes.length;
+  imagenActual = productoActual.imagenes[indiceImagenActual];
+  document.getElementById("imagenGrande").src = imagenActual;
+  actualizarContador();
+}
+
+function actualizarContador() {
+  if (!productoActual) return;
+
+  document.getElementById("contadorImagen").textContent =
+    `${indiceImagenActual + 1} / ${productoActual.imagenes.length}`;
+}
+
+async function compartirWhatsapp() {
+  try {
+    const response = await fetch(imagenActual);
+    const blob = await response.blob();
+    const file = new File([blob], "regulador.jpg", { type: blob.type });
+
+    if (navigator.share) {
+      await navigator.share({
+        files: [file],
+        title: "Regulador",
+        text: "Imagen de regulador"
+      });
+    }
+  } catch (error) {
+    alert("No se pudo compartir");
+  }
+}
+
+function copiarImagen() {
+  navigator.clipboard.writeText(imagenActual);
+  alert("Link copiado");
+}
+
+function descargarImagen() {
+  const link = document.createElement("a");
+  link.href = imagenActual;
+  link.download = "imagen.jpg";
+  link.click();
+}
+
+function toggleModo() {
+  document.body.classList.toggle("dark");
+}
+
+document.getElementById("busqueda").addEventListener("input", (e) => {
+  mostrarResultados(e.target.value);
+});
+
+mostrarResultados();
+</script>
+
+</body>
+</html>
