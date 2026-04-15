@@ -20,12 +20,12 @@ body {
 
 /* Overlay elegante */
 body::before {
-  content:"";
+  content: "";
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.35);
   z-index: -1;
 }
@@ -43,23 +43,23 @@ body::before {
 }
 
 .header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .logo {
-  font-weight:bold;
-  font-size:20px;
-  color:white;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
 }
 
 .toggle {
-  padding:8px 12px;
-  border-radius:8px;
-  border:none;
-  cursor:pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 input {
@@ -67,8 +67,8 @@ input {
   padding: 12px;
   font-size: 16px;
   margin-bottom: 20px;
-  border-radius:8px;
-  border:1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .grid {
@@ -82,17 +82,17 @@ input {
   padding: 10px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  cursor:pointer;
-  transition:0.2s;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .dark .card {
-  background:#1f2937;
-  color:white;
+  background: #1f2937;
+  color: white;
 }
 
 .card:hover {
-  transform:scale(1.03);
+  transform: scale(1.03);
 }
 
 .card img {
@@ -101,86 +101,86 @@ input {
 }
 
 .card p {
-  text-align:center;
-  font-size:14px;
+  text-align: center;
+  font-size: 14px;
 }
 
 /* Modal */
 .modal {
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .modal img {
-  max-width:90%;
-  max-height:70%;
-  border-radius:10px;
-  margin-bottom:15px;
+  max-width: 90%;
+  max-height: 70%;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
 .navegacion {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:15px;
-  margin-bottom:15px;
-  color:white;
-  flex-wrap:wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: white;
+  flex-wrap: wrap;
 }
 
 .navegacion button {
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:14px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .botones {
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .botones button {
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:14px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .whatsapp {
-  background:#25D366;
-  color:white;
+  background: #25D366;
+  color: white;
 }
 
 .copiar {
-  background:#007BFF;
-  color:white;
+  background: #007BFF;
+  color: white;
 }
 
 .descargar {
-  background:#6c757d;
-  color:white;
+  background: #6c757d;
+  color: white;
 }
 
 .cerrar {
-  position:absolute;
-  top:20px;
-  right:30px;
-  color:white;
-  font-size:30px;
-  cursor:pointer;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -220,41 +220,44 @@ let productoActual = null;
 let indiceImagenActual = 0;
 
 const datos = [
+  /*
+  Activa este bloque cuando subas una imagen local para "Regulador simple"
   {
-    nombre: "Regulador simple",
+    nombre: "regulador simple",
     tags: "regulador simple 1 manometro",
     imagenes: [
-      "https://lh3.googleusercontent.com/d/1EhybN0jwv0gaPVNQdhWS6f_8YTH8GcDR"
+      "imagenes/regulador-simple.jpg"
     ]
   },
+  */
+
   {
-    nombre: "Regulador 2 manómetros",
+    nombre: "regulador 2 manómetros",
     tags: "regulador doble 2 manometros",
     imagenes: [
-      "https://lh3.googleusercontent.com/d/1-Be2zjhQdLo9V-ITdKlgh6PoiGRTWzI8"
+      "imagenes/regulador-2-manometros.jpg"
     ]
   },
   {
-    nombre: "Regulador panel",
+    nombre: "regulador panel",
     tags: "regulador panel montaje",
     imagenes: [
-      "https://lh3.googleusercontent.com/d/1HHSmzs9qfGdB5K4Cwskxkl5KW2yimHAs"
+      "imagenes/regulador-panel.jpg"
     ]
   },
-{
-    nombre: "Maleta de herramientas",
-    tags: "Maleta de herramientas",
+  {
+    nombre: "maleta de herramientas",
+    tags: "maleta de herramientas",
     imagenes: [
-      "https://lh3.googleusercontent.com/d/1ToXOcEnwynMD-QNPSvqoS3Lnr1nHVk_L"
+      "imagenes/maleta-de-herramientas-2.jpg"
     ]
   },
-
-{
-    nombre: "Eliminador humedad KPR",
+  {
+    nombre: "eliminador humedad kpr",
     tags: "eliminador de humedad con kpr",
     imagenes: [
-      "https://lh3.googleusercontent.com/d/1BnTr-jXLo3qHyTOhxmWUUfjkRoq0h5EH",
-      "https://lh3.googleusercontent.com/d/1QnFmXGlmAQhG4deYkJJcLFW2QdY6Z7fl"
+      "imagenes/eliminador-humedad-kpr.png",
+      "imagenes/eliminador-humedad-kpr-2.png"
     ]
   }
 ];
@@ -263,22 +266,32 @@ function mostrarResultados(filtro = "") {
   const contenedor = document.getElementById("resultados");
   contenedor.innerHTML = "";
 
-  datos
-    .filter(item =>
-      (item.nombre + " " + item.tags).toLowerCase().includes(filtro.toLowerCase())
-    )
-    .forEach((item, index) => {
-      contenedor.innerHTML += `
-        <div class="card" onclick="abrirModal(${index})">
-          <img src="${item.imagenes[0]}" alt="${item.nombre}">
-          <p>${item.nombre}</p>
-        </div>
-      `;
-    });
+  const resultados = datos.filter(item =>
+    (item.nombre + " " + item.tags).toLowerCase().includes(filtro.toLowerCase())
+  );
+
+  if (resultados.length === 0) {
+    contenedor.innerHTML = `<p style="color:white;">No se encontraron resultados.</p>`;
+    return;
+  }
+
+  resultados.forEach((item, index) => {
+    contenedor.innerHTML += `
+      <div class="card" onclick="abrirModal(${index})">
+        <img src="${item.imagenes[0]}" alt="${item.nombre}">
+        <p>${item.nombre}</p>
+      </div>
+    `;
+  });
 }
 
 function abrirModal(indexProducto) {
-  productoActual = datos[indexProducto];
+  productoActual = datos.filter(item =>
+    (item.nombre + " " + item.tags).toLowerCase().includes(
+      document.getElementById("busqueda").value.toLowerCase()
+    )
+  )[indexProducto];
+
   indiceImagenActual = 0;
   imagenActual = productoActual.imagenes[indiceImagenActual];
 
@@ -318,16 +331,14 @@ function actualizarContador() {
 
 async function compartirWhatsapp() {
   try {
-    const response = await fetch(imagenActual);
-    const blob = await response.blob();
-    const file = new File([blob], "regulador.jpg", { type: blob.type });
-
     if (navigator.share) {
       await navigator.share({
-        files: [file],
-        title: "Regulador",
-        text: "Imagen de regulador"
+        title: productoActual?.nombre || "Producto",
+        text: `Imagen de ${productoActual?.nombre || "producto"}`,
+        url: imagenActual
       });
+    } else {
+      alert("Tu navegador no permite compartir directamente.");
     }
   } catch (error) {
     alert("No se pudo compartir");
@@ -342,7 +353,7 @@ function copiarImagen() {
 function descargarImagen() {
   const link = document.createElement("a");
   link.href = imagenActual;
-  link.download = "imagen.jpg";
+  link.download = imagenActual.split("/").pop();
   link.click();
 }
 
