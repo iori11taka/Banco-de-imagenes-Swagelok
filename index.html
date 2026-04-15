@@ -157,9 +157,20 @@ input {
   font-size: 14px;
 }
 
-.whatsapp { background: #25D366; color: white; }
-.copiar { background: #007BFF; color: white; }
-.descargar { background: #6c757d; color: white; }
+.whatsapp {
+  background: #25D366;
+  color: white;
+}
+
+.copiar {
+  background: #007BFF;
+  color: white;
+}
+
+.descargar {
+  background: #6c757d;
+  color: white;
+}
 
 .cerrar {
   position: absolute;
@@ -186,12 +197,12 @@ input {
 <div class="modal" id="modal">
   <span class="cerrar" onclick="cerrarModal()">✖</span>
 
-  <img id="imagenGrande">
+  <img id="imagenGrande" alt="Imagen grande">
 
   <div class="navegacion">
-    <button onclick="anteriorImagen()">⬅</button>
+    <button onclick="anteriorImagen()">⬅ Anterior</button>
     <span id="contadorImagen">1 / 1</span>
-    <button onclick="siguienteImagen()">➡</button>
+    <button onclick="siguienteImagen()">Siguiente ➡</button>
   </div>
 
   <div class="botones">
@@ -202,70 +213,158 @@ input {
 </div>
 
 <script>
-// 🔥 FONDOS ALEATORIOS
+let imagenActual = "";
+let productoActual = null;
+let indiceImagenActual = 0;
+
+// Fondos aleatorios
 const fondos = [
   "imagenes/fondo1.jpg",
   "imagenes/fondo2.jpg",
   "imagenes/fondo3.jpg",
   "imagenes/fondo4.jpg",
-  "imagenes/fondo5.jpg"
+  "imagenes/fondo5.jpg",
+  "imagenes/fondo6.jpg",
+  "imagenes/fondo7.jpg",
+  "imagenes/fondo8.jpg",
+  "imagenes/fondo9.jpg",
+  "imagenes/fondo10.jpg"
 ];
 
 function cambiarFondoAleatorio() {
-  const i = Math.floor(Math.random() * fondos.length);
-  document.body.style.backgroundImage = `url('${fondos[i]}')`;
+  const indice = Math.floor(Math.random() * fondos.length);
+  document.body.style.backgroundImage = `url('${fondos[indice]}')`;
 }
 
-// VARIABLES
-let imagenActual = "";
-let productoActual = null;
-let indiceImagenActual = 0;
-
-// DATOS
 const datos = [
-{
-  nombre: "Regulador KPR Simple",
-  tags: "regulador simple",
-  imagenes: ["imagenes/regulador-simple.jpg"]
-},
-{
-  nombre: "Regulador KPR 1 Manómetro",
-  tags: "regulador 1 manometro",
-  imagenes: [
-    "imagenes/regulador-1-manometro.jpg",
-    "imagenes/regulador-1-manometro-2.jpg"
-  ]
-},
-{
-  nombre: "Regulador KPR 2 Manómetros",
-  tags: "regulador doble",
-  imagenes: ["imagenes/regulador-2-manometros.jpg"]
-}
+  {
+    nombre: "Regulador KPR Simple",
+    tags: "Regulador simple 1 manometros",
+    imagenes: [
+      "imagenes/regulador-simple.jpg"
+    ]
+  },
+  {
+    nombre: "Regulador KPR de 1 Manómetros Simple",
+    tags: "regulador kpr 1 manometro",
+    imagenes: [
+      "imagenes/regulador-1-manometro.jpg",
+      "imagenes/regulador-1-manometro-2.jpg",
+      "imagenes/regulador-1-manometro-3.jpg",
+      "imagenes/regulador-1-manometro-4.jpg"
+    ]
+  },
+  {
+    nombre: "Regulador KPR de 2 Manómetros",
+    tags: "regulador doble 2 manometros",
+    imagenes: [
+      "imagenes/regulador-2-manometros.jpg"
+    ]
+  },
+  {
+    nombre: "Regulador KPR de 2 Manómetros OMEGA",
+    tags: "regulador panel montaje",
+    imagenes: [
+      "imagenes/regulador-panel.jpg"
+    ]
+  },
+  {
+    nombre: "Regulador KPR de 2 Manómetros con Manguera y CGA580",
+    tags: "regulador kpr 2 manometros manguera y cga580",
+    imagenes: [
+      "imagenes/reguladorkpr-manguera-cga580.jpg",
+      "imagenes/reguladorkpr-manguera-cga580-2.jpg",
+      "imagenes/reguladorkpr-manguera-cga580-3.jpg",
+      "imagenes/reguladorkpr-manguera-cga580-4.jpg"
+    ]
+  },
+  {
+    nombre: "Regulador KPF de 2 Manómetros con Adaptadores ODxNPT",
+    tags: "regulador kpf 2 manometros y adapta",
+    imagenes: [
+      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-4.jpg",
+      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt.jpg",
+      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-2.jpg",
+      "imagenes/regulador-kpf-2-manometros-fittings-odxnpt-3.jpg"
+    ]
+  },
+  {
+    nombre: "Maleta de Herramientas",
+    tags: "maleta de herramientas",
+    imagenes: [
+      "imagenes/maleta-de-herramientas-2.jpg",
+      "imagenes/maleta-de-herramientas-3.jpg",
+      "imagenes/maleta-de-herramientas-4.jpg"
+    ]
+  },
+  {
+    nombre: "Cilindro Toma Muestra 304 300cc Accesorios Completos",
+    tags: "cilindro 300cc 304 completo",
+    imagenes: [
+      "imagenes/cilindrotm-300cc-completo.jpg",
+      "imagenes/cilindrotm-300cc-completo-2.jpg"
+    ]
+  },
+  {
+    nombre: "Cilindro Toma Muestra 316 500cc Accesorios Completos",
+    tags: "cilindro 500cc 316 completo",
+    imagenes: [
+      "imagenes/cilindrotm316-500cc-completo.jpg",
+      "imagenes/cilindrotm316-500cc-completo-2.jpg"
+    ]
+  },
+  {
+    nombre: "Válvula V2NBM8 con Manómetro",
+    tags: "valvula v2nbm8 con manometro",
+    imagenes: [
+      "imagenes/valvula-v2nbm8-manometro.jpg",
+      "imagenes/valvula-v2nbm8-manometro-2.jpg",
+      "imagenes/valvula-v2nbm8-manometro-3.jpg",
+      "imagenes/valvula-v2nbm8-manometro-4.jpg"
+    ]
+  },
+  {
+    nombre: "Eliminador de Humedad KPR",
+    tags: "eliminador de humedad con kpr",
+    imagenes: [
+      "imagenes/eliminador-humedad-kpr.png",
+      "imagenes/eliminador-humedad-kpr-2.png"
+    ]
+  }
 ];
 
-// FUNCIONES
 function mostrarResultados(filtro = "") {
   const contenedor = document.getElementById("resultados");
   contenedor.innerHTML = "";
 
   const resultados = datos.filter(item =>
-    (item.nombre + item.tags).toLowerCase().includes(filtro.toLowerCase())
+    (item.nombre + " " + item.tags).toLowerCase().includes(filtro.toLowerCase())
   );
 
-  resultados.forEach((item, i) => {
+  if (resultados.length === 0) {
+    contenedor.innerHTML = `<p style="color:white;">No se encontraron resultados.</p>`;
+    return;
+  }
+
+  resultados.forEach((item, index) => {
     contenedor.innerHTML += `
-      <div class="card" onclick="abrirModal(${i})">
-        <img src="${item.imagenes[0]}">
+      <div class="card" onclick="abrirModal(${index})">
+        <img src="${item.imagenes[0]}" alt="${item.nombre}">
         <p>${item.nombre}</p>
       </div>
     `;
   });
 }
 
-function abrirModal(i) {
-  productoActual = datos[i];
+function abrirModal(indexProducto) {
+  productoActual = datos.filter(item =>
+    (item.nombre + " " + item.tags).toLowerCase().includes(
+      document.getElementById("busqueda").value.toLowerCase()
+    )
+  )[indexProducto];
+
   indiceImagenActual = 0;
-  imagenActual = productoActual.imagenes[0];
+  imagenActual = productoActual.imagenes[indiceImagenActual];
 
   document.getElementById("modal").style.display = "flex";
   document.getElementById("imagenGrande").src = imagenActual;
@@ -277,6 +376,8 @@ function cerrarModal() {
 }
 
 function siguienteImagen() {
+  if (!productoActual) return;
+
   indiceImagenActual = (indiceImagenActual + 1) % productoActual.imagenes.length;
   imagenActual = productoActual.imagenes[indiceImagenActual];
   document.getElementById("imagenGrande").src = imagenActual;
@@ -284,6 +385,8 @@ function siguienteImagen() {
 }
 
 function anteriorImagen() {
+  if (!productoActual) return;
+
   indiceImagenActual = (indiceImagenActual - 1 + productoActual.imagenes.length) % productoActual.imagenes.length;
   imagenActual = productoActual.imagenes[indiceImagenActual];
   document.getElementById("imagenGrande").src = imagenActual;
@@ -291,8 +394,26 @@ function anteriorImagen() {
 }
 
 function actualizarContador() {
+  if (!productoActual) return;
+
   document.getElementById("contadorImagen").textContent =
     `${indiceImagenActual + 1} / ${productoActual.imagenes.length}`;
+}
+
+async function compartirWhatsapp() {
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: productoActual?.nombre || "Producto",
+        text: `Imagen de ${productoActual?.nombre || "producto"}`,
+        url: imagenActual
+      });
+    } else {
+      alert("Tu navegador no permite compartir directamente.");
+    }
+  } catch (error) {
+    alert("No se pudo compartir");
+  }
 }
 
 function copiarImagen() {
@@ -301,26 +422,20 @@ function copiarImagen() {
 }
 
 function descargarImagen() {
-  const a = document.createElement("a");
-  a.href = imagenActual;
-  a.download = "";
-  a.click();
-}
-
-function compartirWhatsapp() {
-  window.open(`https://wa.me/?text=${imagenActual}`);
+  const link = document.createElement("a");
+  link.href = imagenActual;
+  link.download = imagenActual.split("/").pop();
+  link.click();
 }
 
 function toggleModo() {
   document.body.classList.toggle("dark");
 }
 
-// EVENTOS
-document.getElementById("busqueda").addEventListener("input", e => {
+document.getElementById("busqueda").addEventListener("input", (e) => {
   mostrarResultados(e.target.value);
 });
 
-// INICIO
 cambiarFondoAleatorio();
 mostrarResultados();
 </script>
